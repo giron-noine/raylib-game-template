@@ -33,12 +33,13 @@ PROJECT_NAME          ?= raylib_game
 PROJECT_VERSION       ?= 1.0
 PROJECT_BUILD_PATH    ?= .
 
-RAYLIB_PATH           ?= ../../raylib
+RAYLIB_PATH           ?= ../raylib
+HOMEBREW_PATH         ?= /opt/homebrew/opt/raylib/lib
 
 # Locations of raylib.h and libraylib.a/libraylib.so
 # NOTE: Those variables are only used for PLATFORM_OS: LINUX, BSD
-RAYLIB_INCLUDE_PATH   ?= /usr/local/include
-RAYLIB_LIB_PATH       ?= /usr/local/lib
+RAYLIB_INCLUDE_PATH   ?= /opt/homebrew/opt/raylib/include
+RAYLIB_LIB_PATH       ?= /opt/homebrew/opt/raylib/lib
 
 # Library type compilation: STATIC (.a) or SHARED (.so/.dll)
 RAYLIB_LIBTYPE        ?= STATIC
@@ -234,7 +235,7 @@ INCLUDE_PATHS = -I. -I$(RAYLIB_PATH)/src -I$(RAYLIB_PATH)/src/external -I$(RAYLI
 
 # Define additional directories containing required header files
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
-    ifeq ($(PLATFORM_OS),BSD)
+    ifeq ($(PLATFORM_OS),OSX)
         INCLUDE_PATHS += -I$(RAYLIB_INCLUDE_PATH)
     endif
     ifeq ($(PLATFORM_OS),LINUX)
@@ -263,7 +264,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
             LDFLAGS += -Wl,--subsystem,windows
         endif
     endif
-    ifeq ($(PLATFORM_OS),LINUX)
+    ifeq ($(PLATFORM_OS),OSX)
         LDFLAGS += -L$(RAYLIB_LIB_PATH)
     endif
     ifeq ($(PLATFORM_OS),BSD)
